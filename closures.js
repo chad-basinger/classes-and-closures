@@ -73,11 +73,11 @@ function makeCounter(){
 
 
 // Uncomment this once you make your function
-  var count = makeCounter();
-  count(); // 1
-  count(); // 2
-  count(); // 3
-  count(); // 4
+  // var count = makeCounter();
+  // count(); // 1
+  // count(); // 2
+  // count(); // 3
+  // count(); // 4
 ////////// PROBLEM 4 //////////
 
 /*
@@ -88,6 +88,19 @@ function makeCounter(){
   Information on the module pattern available here: 
   http://stackoverflow.com/questions/17776940/javascript-module-pattern-with-example?answertab=votes#tab-top
 */
+
+var counterFactory = function(num4) {
+  this.num4 = num4;
+
+  return {
+    inc: function() {
+      return (num4 += 1);
+    },
+    dec: function() {
+      return (num4 -= 1);
+    }
+  };
+};
 
 // function counterFactory(num) {
 //   let num = 0;
@@ -104,7 +117,7 @@ function makeCounter(){
 // }
 // const counter = counterFactory();
 
-var counter = counterFactory(10);
+let counter = counterFactory(10);
 // counter.inc() // 11
 // counter.inc() // 12
 // counter.inc() // 13
@@ -142,14 +155,14 @@ var greeting = motivation('Billy', 'Bob'); // 'You're doing awesome keep it up B
   Invoke this by calling module.publicMethod(); outside the module scope
 */
 
-var module = (function() {
+var module = (() => {
   var person = {
     name: "phillip",
     age: 29,
     location: "Utah"
   };
 
-  function privateMethod(){
+  function privateMethod() {
     return "Hi, I'm " + person.name + ", age " + person.age + " from " + person.location;
   }
 
@@ -157,10 +170,34 @@ var module = (function() {
   // outside our lexical scope
   return {
     publicMethod: function(){
-      privateMethod()
+      return privateMethod();
     }
-  };
+  }
+
 })();
+
+// var module = (() => {
+//   var person = {
+//     name: "phillip",
+//     age: 29,
+//     location: "Utah"
+//   };
+
+//   function privateMethod() {
+//     return "Hi, I'm " + person.name + ", age " + person.age + " from " + person.location;
+//   }
+
+//   // Anything that is being returned is made public and can be invoked from
+//   // outside our lexical scope
+//   function publicMethod() {
+//     privateMethod();
+//   }
+
+//   return {
+//     publicMethod: publicMethod
+//   };
+
+// })();
 
 module.publicMethod()
 
@@ -210,7 +247,7 @@ function secretNumber() {
 */
 
 function timeOutCounter() {
-  for (var i = 0; i <= 5; i++) {
+  for (let i = 0; i <= 5; i++) {
     setTimeout(() => {
       console.log(i);
     }, i *1000);
